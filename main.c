@@ -1,3 +1,24 @@
+/* 
+ * uniInfo
+ *
+ * Provide unicode string information as provided in glib
+ *
+ * Copyright (C) 2013  Inori Sakura <inorindesu@gmail.com>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
 #include <stdio.h>
 #include <stdbool.h>
 #include <glib.h>
@@ -281,6 +302,7 @@ int main(int argc, char** argv)
   
   const int singleUni8Size = 6 + 1;
   gchar* charBuf = g_malloc0(singleUni8Size);
+  gchar dottedCircle[] = {0xE2, 0x97, 0x8c, 0};
   while((currentChar = ucs4_buffer[index]) != 0)
     {
       /*clearing*/
@@ -293,7 +315,10 @@ int main(int argc, char** argv)
         }
       else
         {
-          printf("%d\t%s\t", index, charBuf);
+          if (g_unichar_ismark(currentChar))
+            printf("%d\t%s%s\t", index, dottedCircle, charBuf);
+          else
+            printf("%d\t%s\t", index, charBuf);
         }
       put_script(g_unicode_script_to_iso15924(g_unichar_get_script(currentChar)));
       printf("\t%s\t%s\n",
