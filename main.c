@@ -112,7 +112,7 @@ char* get_type_string(GUnicodeType type)
     case G_UNICODE_INITIAL_PUNCTUATION:
       return "Initial punctuation";
     case G_UNICODE_OTHER_PUNCTUATION:
-      return "Other punctuatio";
+      return "Other punctuation";
     case G_UNICODE_OPEN_PUNCTUATION:
       return "Open punctuation";
     case G_UNICODE_CURRENCY_SYMBOL:
