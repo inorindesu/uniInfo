@@ -298,7 +298,7 @@ int main(int argc, char** argv)
       printf("# Original input string\n");
     }
   
-  printf("#Char index\tChar\tScript\tType\tBreakType\n");
+  printf("#Char index\tByte offset(utf8)\tChar\tScript\tType\tBreakType\n");
   
   const int singleUni8Size = 6 + 1;
   gchar* charBuf = g_malloc0(singleUni8Size);
@@ -309,16 +309,17 @@ int main(int argc, char** argv)
       memset(charBuf, 0, singleUni8Size);
       
       g_unichar_to_utf8(currentChar, charBuf);
+      int bOffset = g_utf8_offset_to_pointer(buf, index) - buf;
       if (addSpace)
         {
-          printf("%d\t  %s\t", index, charBuf);
+          printf("%d\t%d\t  %s\t", index, bOffset, charBuf);
         }
       else
         {
           if (g_unichar_ismark(currentChar))
-            printf("%d\t%s%s\t", index, dottedCircle, charBuf);
+            printf("%d\t%d\t%s%s\t", index, bOffset, dottedCircle, charBuf);
           else
-            printf("%d\t%s\t", index, charBuf);
+            printf("%d\t%d\t%s\t", index, bOffset, charBuf);
         }
       put_script(g_unicode_script_to_iso15924(g_unichar_get_script(currentChar)));
       printf("\t%s\t%s\n",
